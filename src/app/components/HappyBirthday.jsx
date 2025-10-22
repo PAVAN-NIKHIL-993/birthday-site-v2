@@ -18,7 +18,7 @@ export default function HappyBirthday({ onNext }) {
         return () => window.removeEventListener('resize', updateBalloonCount);
     }, []);
 
-    // Balloon Component
+    // Heart-shaped Balloon Component
     const Balloon = ({ color, delay = 0, x = 0 }) => (
         <motion.div
             className="absolute pointer-events-none"
@@ -27,35 +27,26 @@ export default function HappyBirthday({ onNext }) {
                 bottom: "-2.5%",
                 zIndex: 5,
             }}
-            animate={
-                {
-                    y: [0, -15, 0],
-                    x: [0, 5, -5, 0],
-                    rotate: [0, 3, -3, 0],
-                }
-            }
-            transition={
-                {
-                    duration: 4 + Math.random() * 2,
-                    repeat: Infinity,
-                    delay: delay,
-                    ease: "easeInOut",
-                }
-            }
+            animate={{
+                y: [0, -25, 0],
+                x: [0, 5, -5, 0],
+                rotate: [0, 3, -3, 0],
+            }}
+            transition={{
+                duration: 4 + Math.random() * 2,
+                repeat: Infinity,
+                delay: delay,
+                ease: "easeInOut",
+            }}
         >
-            <div className="relative w-[70px] h-[80px]">
-                {/* Balloon shape */}
+            <div className="relative w-[70px] h-[70px]">
+                {/* Heart shape */}
                 <div
                     className={`w-full h-full bg-gradient-to-b ${color} relative shadow-md`}
                     style={{
-                        borderRadius: "75% 75% 80% 80% / 75% 75% 80% 80%",
+                        clipPath: "polygon(50% 0%, 61% 8%, 68% 18%, 70% 28%, 62% 44%, 50% 60%, 38% 44%, 30% 28%, 32% 18%, 39% 8%)",
                     }}
-                >
-                    {/* Highlights */}
-                    <div className="absolute top-2 left-2 w-3 h-5 bg-white/50 rounded-full blur-[1px]" />
-                    <div className="absolute bottom-2 left-3 w-2 h-1 bg-white/30 rounded-full blur-[0.5px]" />
-                </div>
-
+                />
                 {/* Tie */}
                 <div
                     className={`absolute bottom-[-10px] left-1/2 transform -translate-x-1/2 w-[12px] h-[12px] bg-gradient-to-b ${color}`}
@@ -63,13 +54,11 @@ export default function HappyBirthday({ onNext }) {
                         clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)",
                     }}
                 />
-
             </div>
-
         </motion.div>
     )
 
-    // Cake
+    // Animated Cake
     const AnimatedCake = () => (
         <motion.div
             className="relative z-10"
@@ -112,7 +101,6 @@ export default function HappyBirthday({ onNext }) {
                         </div>
                     ))}
                 </div>
-
 
                 {/* Top layer */}
                 <div className="w-20 h-10 bg-gradient-to-b from-purple-200 to-purple-400 rounded-xl relative mx-auto -mt-1 shadow-lg">
@@ -158,11 +146,11 @@ export default function HappyBirthday({ onNext }) {
 
     const balloonColors = [
         "from-red-400 to-red-500",
+        "from-pink-400 to-pink-600",
+        "from-purple-400 to-purple-600",
+        "from-yellow-400 to-yellow-600",
         "from-blue-400 to-blue-500",
         "from-green-400 to-green-600",
-        "from-yellow-400 to-yellow-600",
-        "from-purple-400 to-purple-600",
-        "from-pink-400 to-pink-600",
     ]
 
     return (
@@ -173,7 +161,7 @@ export default function HappyBirthday({ onNext }) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.8 }}
         >
-            {/* balloons at bottom*/}
+            {/* Heart balloons */}
             {Array.from({ length: balloonCount }, (_, i) => {
                 const colorIndex = i % balloonColors.length;
                 const xPosition = (100 / balloonCount) * i;
@@ -188,12 +176,10 @@ export default function HappyBirthday({ onNext }) {
                 );
             })}
 
-
             <motion.div
                 className="text-center mb-8 relative z-10"
                 initial={{ scale: 0.5, opacity: 0 }}
                 animate={{ scale: 1, opacity: 1 }}
-
                 transition={{
                     delay: 0.5,
                     type: "spring",
@@ -220,7 +206,7 @@ export default function HappyBirthday({ onNext }) {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 1.3 }}
                 >
-                    Madam Jii<span className="text-white">💕</span>
+                    AKACHAN<span className="text-white">💕</span>
                 </motion.h2>
 
                 <motion.div
@@ -228,9 +214,7 @@ export default function HappyBirthday({ onNext }) {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 1.5 }}
-                    style={{
-                        textShadow: "0 0 10px rgba(0,0,0,0.8)",
-                    }}
+                    style={{ textShadow: "0 0 10px rgba(0,0,0,0.8)" }}
                 >
                     🎉 It's your special day! 🎉
                 </motion.div>

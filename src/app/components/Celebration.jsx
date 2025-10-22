@@ -6,118 +6,129 @@ import confetti from "canvas-confetti"
 import { useEffect } from "react"
 
 export default function Celebration({ onNext }) {
-    const colors = ["#ff69b4", "#ff1493", "#9370db"]
-    useEffect(() => {
-        const duration = 2500
-        const end = Date.now() + duration
+  // 💗 Gradient color palette for heart confetti
+  const loveGradients = [
+    "linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%)",
+    "linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%)",
+    "linear-gradient(135deg, #ff6a88 0%, #ff99ac 50%, #a44af1 100%)",
+    "linear-gradient(135deg, #ffb6b9 0%, #fae3d9 50%, #bbded6 100%)",
+    "linear-gradient(135deg, #fbd3e9 0%, #bb377d 100%)",
+    "linear-gradient(135deg, #c471f5 0%, #fa71cd 100%)",
+    "linear-gradient(135deg, #f00000 0%, #ff0099 100%)",
+    "linear-gradient(135deg, #6a11cb 0%, #2575fc 100%)",
+  ]
 
-        const frame = () => {
-            const randomColor = () => colors[Math.floor(Math.random() * colors.length)]
+  // Extract pure hex colors from gradients
+  const loveColors = loveGradients.flatMap(
+    (g) => g.match(/#[0-9A-Fa-f]{6}/g) || []
+  )
 
-            for (let i = 0; i < 2; i++) {
-                confetti({
-                    particleCount: 1,
-                    angle: i === 0 ? 60 : 120,
-                    spread: 55,
-                    origin: { x: i === 0 ? 0 : 1 },
-                    colors: [randomColor()],
-                })
-            }
+  useEffect(() => {
+    const duration = 2500
+    const end = Date.now() + duration
 
-            if (Date.now() < end) {
-                requestAnimationFrame(frame)
-            }
-        }
+    const frame = () => {
+      // Heart confetti bursts from both sides
+      for (let side = 0; side < 2; side++) {
+        confetti({
+          particleCount: 8,
+          angle: side === 0 ? 60 : 120,
+          spread: 80,
+          origin: { x: side === 0 ? 0 : 1 },
+          colors: loveColors,
+          shapes: ["heart"],
+          scalar: 1.2,
+          ticks: 250,
+        })
+      }
 
-        frame()
-    }, [])
+      if (Date.now() < end) requestAnimationFrame(frame)
+    }
 
-    return (
-        <motion.div
-            className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, y: -100 }}
-            transition={{ duration: 0.8 }}
-        >
+    frame()
+  }, [])
 
-            <motion.div
-                className="text-center mb-12"
-                initial={{ y: 50, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 0.3 }}
-            >
-                <motion.div
-                    className="relative mb-8"
-                    animate={{
-                        rotate: [0, 10, -10, 0],
-                        scale: [1, 1.1, 1],
-                    }}
-                    transition={{
-                        duration: 2,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                    }}
-                >
-                    <div className="w-32 h-32 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto shadow-2xl relative overflow-hidden">
-                        <motion.div
-                            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                            animate={{ x: ["-100%", "100%"] }}
-                            transition={{ duration: 2, repeat: Infinity }}
-                        />
-                        <Gift className="w-16 h-16 text-white relative z-10" />
-                    </div>
-                </motion.div>
+  return (
+    <motion.div
+      className="relative flex flex-col items-center justify-center min-h-screen overflow-hidden bg-gradient-to-br from-pink-100 via-rose-100 to-purple-100 p-4"
+      initial={{ opacity: 0, scale: 0.9 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, y: -100 }}
+      transition={{ duration: 1.2, ease: 'easeOut' }}
+    >
+      {/* 🌈 Floating Pulsing Gradient Orbs (Romantic Atmosphere) */}
+      <motion.div
+        className="absolute top-20 left-20 w-40 h-40 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 rounded-full blur-3xl opacity-40 animate-pulse"
+      />
+      <motion.div
+        className="absolute bottom-32 right-24 w-48 h-48 bg-gradient-to-r from-rose-400 via-pink-400 to-fuchsia-500 rounded-full blur-3xl opacity-40 animate-pulse"
+      />
+      <motion.div
+        className="absolute bottom-10 left-1/3 w-56 h-56 bg-gradient-to-r from-fuchsia-500 via-purple-500 to-indigo-500 rounded-full blur-3xl opacity-30 animate-pulse"
+      />
 
-                <motion.h1
-                    className="text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 mb-6"
-                    style={{
-                        filter: "drop-shadow(0 0 30px rgba(255,105,180,0.5))",
-                    }}
-                >
-                    Time to Celebrate!
-                </motion.h1>
+      {/* 🎁 Glowing Gift + ❤️ Heart Fusion Animation */}
+      <motion.div
+        className="relative mb-12"
+        animate={{
+          rotate: [0, 8, -8, 0],
+          scale: [1, 1.1, 1],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+        {/* Outer glowing gradient sphere */}
+        <div className="w-36 h-36 bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto shadow-2xl relative overflow-hidden">
+          {/* Shimmer pass across the surface */}
+          <motion.div
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent"
+            animate={{ x: ["-100%", "100%"] }}
+            transition={{ duration: 2, repeat: Infinity }}
+          />
+          {/* Dual Icons - Gift + Heart fusion */}
+          <div className="flex items-center justify-center space-x-2 relative z-10">
+            <Gift className="w-12 h-12 text-white drop-shadow-lg" />
+            <Heart className="w-10 h-10 text-pink-300 drop-shadow-lg" />
+          </div>
+        </div>
+      </motion.div>
 
-                <motion.p
-                    className="text-xl text-purple-300 mb-8"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.8 }}
-                >
-                    The countdown is over... Let's celebrate! 🎉
-                </motion.p>
-            </motion.div>
+      {/* ✨ Title + Subtext */}
+      <motion.h1
+        className="text-5xl md:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-purple-400 to-indigo-400 mb-4"
+        style={{ filter: "drop-shadow(0 0 30px rgba(255,105,180,0.5))" }}
+        initial={{ y: 50, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        transition={{ delay: 0.3 }}
+      >
+        Time to Celebrate!
+      </motion.h1>
 
-            <motion.div
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{
-                    delay: 1,
-                    type: "spring",
-                    stiffness: 200,
-                    damping: 10,
-                }}
-            >
-                <button
-                    onClick={onNext}
-                    className="relative bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 hover:from-pink-600 hover:via-purple-600 hover:to-indigo-600 text-white text-lg px-8 py-4 rounded-full shadow-xl border-2 border-white/70 transition-all duration-300 hover:scale-[103%]"
-                >
-                    <motion.div className="flex items-center space-x-2" whileTap={{ scale: 0.95 }}>
-                        <Gift className="w-5 h-5" />
-                        <span className="font-semibold">Let's Celebrate!</span>
-                        <Sparkles className="w-5 h-5" />
-                    </motion.div>
-                </button>
-            </motion.div>
+      <motion.p
+        className="text-xl text-pink-500 mb-10"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.8 }}
+      >
+        Celebrating connections, confetti, and pure affection ✨
+      </motion.p>
 
-            <motion.div
-                className="mt-8 text-center"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.5 }}
-            >
-                <p className="text-purple-300 text-base">Click to start the magic! ✨</p>
-            </motion.div>
+      {/* 🪩 CTA Button */}
+      <motion.button
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.95 }}
+        onClick={onNext}
+        className="relative bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500 hover:from-pink-600 hover:via-purple-600 hover:to-indigo-600 text-white text-lg px-8 py-4 rounded-full shadow-xl border-2 border-white/70 transition-all duration-300"
+      >
+        <motion.div className="flex items-center space-x-2" whileTap={{ scale: 0.95 }}>
+          <Gift className="w-5 h-5" />
+          <span className="font-semibold">Let's Celebrate!</span>
+          <Sparkles className="w-5 h-5" />
         </motion.div>
-    )
+      </motion.button>
+    </motion.div>
+  )
 }
